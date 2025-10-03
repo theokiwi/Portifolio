@@ -30,7 +30,7 @@ export default function Header() {
         <div className="flex flex-col justify-center leading-tight">
           <span className="font-bold text-lg">Theo Diniz</span>
           <span className="text-sm dark:text-neutral-400 text-slate-800"
-                >Computer Scientist</span>
+          >Computer Scientist</span>
         </div>
       </Link>
 
@@ -63,7 +63,7 @@ export default function Header() {
     font-bold text-white
     px-4 py-2 rounded-lg
     
-    bg-gradient-to-r from-green-400 to-green-800
+    bg-gradient-to-r from-green-400 to-green-700
 
     bg-[length:200%_auto] 
     hover:bg-[position:right_center] 
