@@ -24,7 +24,7 @@ export default function WhyMe() {
                     ">adaptable professional</span>, I am committed to excellence in every project.
                 </p>
             </div>
-            <div className="py-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
+            <div className="py-1 pb-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
                 <SpotlightCard
                     spotlightColor="rgba(52, 211, 153, 0.15)"
                     className="bg-neutral-950 p-8 rounded-2xl border border-neutral-800 w-full h-full"

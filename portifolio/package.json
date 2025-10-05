@@ -18,6 +18,8 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "commitizen": "^4.3.1",
+    "framer-motion": "^12.23.22",
+    "gl-matrix": "^3.4.4",
     "gsap": "^3.13.0",
     "lucide-react": "^0.544.0",
     "motion": "^12.23.22",
