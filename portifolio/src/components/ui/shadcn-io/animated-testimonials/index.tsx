@@ -18,6 +18,74 @@ export interface AnimatedTestimonialsProps {
   className?: string;
 }
 
+// ✨ New component to manage its own state and prevent hydration errors
+const TestimonialCard = ({
+  testimonial,
+  isActive,
+  zIndex,
+}: {
+  testimonial: Testimonial;
+  isActive: boolean;
+  zIndex: number;
+}) => {
+  // Initialize rotation state with a consistent value (0)
+  const [rotations, setRotations] = useState({
+    initial: 0,
+    animate: 0,
+    exit: 0,
+  });
+
+  // Generate random rotations only on the client-side after mounting
+  useEffect(() => {
+    const randomRotate = () => Math.floor(Math.random() * 21) - 10;
+    setRotations({
+      initial: randomRotate(),
+      animate: randomRotate(),
+      exit: randomRotate(),
+    });
+  }, []);
+
+  return (
+    <motion.div
+      key={testimonial.src}
+      initial={{
+        opacity: 0,
+        scale: 0.9,
+        z: -100,
+        rotate: rotations.initial,
+      }}
+      animate={{
+        opacity: isActive ? 1 : 0.7,
+        scale: isActive ? 1 : 0.95,
+        z: isActive ? 0 : -100,
+        rotate: isActive ? 0 : rotations.animate,
+        zIndex: zIndex,
+        y: isActive ? [0, -80, 0] : 0,
+      }}
+      exit={{
+        opacity: 0,
+        scale: 0.9,
+        z: 100,
+        rotate: rotations.exit,
+      }}
+      transition={{
+        duration: 0.4,
+        ease: "easeInOut",
+      }}
+      className="absolute inset-0 origin-bottom"
+    >
+      <img
+        src={testimonial.src}
+        alt={testimonial.name}
+        width={500}
+        height={500}
+        draggable={false}
+        className="h-full w-full rounded-3xl object-cover object-center"
+      />
+    </motion.div>
+  );
+};
+
 export const AnimatedTestimonials = ({
   testimonials,
   autoplay = false,
@@ -33,20 +101,12 @@ export const AnimatedTestimonials = ({
     setActive((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
-  const isActive = (index: number) => {
-    return index === active;
-  };
-
   useEffect(() => {
     if (autoplay) {
       const interval = setInterval(handleNext, 5000);
       return () => clearInterval(interval);
     }
   }, [autoplay]);
-
-  const randomRotateY = () => {
-    return Math.floor(Math.random() * 21) - 10;
-  };
 
   return (
     <div className={cn("mx-auto max-w-sm px-4 py-20 font-sans antialiased md:max-w-4xl md:px-8 lg:px-12", className)}>
@@ -55,45 +115,16 @@ export const AnimatedTestimonials = ({
           <div className="relative h-80 w-full">
             <AnimatePresence>
               {testimonials.map((testimonial, index) => (
-                <motion.div
+                <TestimonialCard
                   key={testimonial.src}
-                  initial={{
-                    opacity: 0,
-                    scale: 0.9,
-                    z: -100,
-                    rotate: randomRotateY(),
-                  }}
-                  animate={{
-                    opacity: isActive(index) ? 1 : 0.7,
-                    scale: isActive(index) ? 1 : 0.95,
-                    z: isActive(index) ? 0 : -100,
-                    rotate: isActive(index) ? 0 : randomRotateY(),
-                    zIndex: isActive(index)
+                  testimonial={testimonial}
+                  isActive={index === active}
+                  zIndex={
+                    index === active
                       ? 40
-                      : testimonials.length + 2 - index,
-                    y: isActive(index) ? [0, -80, 0] : 0,
-                  }}
-                  exit={{
-                    opacity: 0,
-                    scale: 0.9,
-                    z: 100,
-                    rotate: randomRotateY(),
-                  }}
-                  transition={{
-                    duration: 0.4,
-                    ease: "easeInOut",
-                  }}
-                  className="absolute inset-0 origin-bottom"
-                >
-                  <img
-                    src={testimonial.src}
-                    alt={testimonial.name}
-                    width={500}
-                    height={500}
-                    draggable={false}
-                    className="h-full w-full rounded-3xl object-cover object-center"
-                  />
-                </motion.div>
+                      : testimonials.length + 2 - index
+                  }
+                />
               ))}
             </AnimatePresence>
           </div>
