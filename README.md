@@ -22,6 +22,8 @@ This repository contains the source code for my personal portfolio. The goal is 
 
 The site is being built from the ground up to be both performant and easily maintainable.
 
+<img width="1912" height="977" alt="Screenshot From 2025-10-10 17-48-59" src="https://github.com/user-attachments/assets/9d14ed2c-e936-4f87-a67d-bb00048539d9" />
+
 ## 💻 Tech Stack
 
 This project is built with a modern front-end stack, focusing on performance, developer experience, and type safety.
